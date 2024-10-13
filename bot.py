@@ -54,6 +54,11 @@ def main() -> None:
         
         bot.reply_to(message, f"Пользователь @{message.from_user.username} был забанен.\nПричина: 'Реклама'")
 
+    @bot.message_handler(content_types=['new_chat_members'])
+    def new_user(message: Message):
+        bot.send_message(message.chat.id, f'Новый пользователь: @{message.from_user.username}!')
+        bot.approve_chat_join_request(message.chat.id, message.from_user.id)
+
     bot.infinity_polling(none_stop=True, logger_level=logging.DEBUG)
 
 
